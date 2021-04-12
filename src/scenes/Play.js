@@ -60,7 +60,7 @@ class Play extends Phaser.Scene {
        this.gameOver = false;
        //timer (60 seconds)
        scoreConfig.fixedWidth = 0;
-       this.clock = this.time.delayedCall(1000, () => {
+       this.clock = this.time.delayedCall(60000, () => {
            this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
            this.add.text(game.config.width/2, game.config.height/2 + 64, "Press (R) to Restart", scoreConfig).setOrigin(0.5);
            this.gameOver = true;
@@ -70,7 +70,7 @@ class Play extends Phaser.Scene {
 
     update(){
         //check for restart
-        if(this.gameOver && Phaser.input.Keyboard.JustDown(keyR)){
+        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
         }
         this.starfield.tilePositionX -=4;
@@ -121,6 +121,6 @@ class Play extends Phaser.Scene {
         //score add and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text =  this.p1Score;
-
+        this.sound.play("sfx_explosion")
     }
 }
