@@ -40,8 +40,9 @@ class Play extends Phaser.Scene {
            frames: this.anims.generateFrameNumbers("explosion", {start: 0, end:9, first:0}),
            frameRate: 30
        })
-       //define score
+       //define scores
        this.p1Score = 0;
+       this.highScore = 0;
        //display score
        let scoreConfig = {
            fontFamily:"Courier",
