@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.load.image("spaceship", "./assets/spaceship.png");
         this.load.image("starfield", "./assets/starfield.png");
         this.load.image("ball", "./assets/energy-ball.png");
+        this.load.image("ufo", "./assets/ufo.png");
 
         //load spritesheet
         this.load.spritesheet("explosion", "./assets/explosion.png", {frameWidth: 64, frameHeight: 32, startFrame:0, endFrame:9});
@@ -25,10 +26,12 @@ class Play extends Phaser.Scene {
        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0,0);
        //rocket
        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height-borderUISize-borderPadding, "rocket").setOrigin(0.5,0);
-       //add 3 spaceships
+       //add 3 spaceships and ufo
        this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, "spaceship", 0, 30).setOrigin(0,0);
        this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0,0);
        this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, "spaceship", 0, 10).setOrigin(0,0);
+       this.ufo1 = new Spaceship(this, game.config.width, borderUISize*9 + borderPadding, "ufo", 0, 100).setOrigin(0,0);
+       this.ufo1.moveSpeed = 6;
        //add energy ball
        this.ball = new Ball(this, game.config.width/2, game.config.height-borderUISize-borderPadding-12, "ball").setOrigin(0.5,0);
        //controls
@@ -85,6 +88,7 @@ class Play extends Phaser.Scene {
             this.ship01.update();
             this.ship02.update();
             this.ship03.update();
+            this.ufo1.update();
             this.ball.update();
         }
 
@@ -119,6 +123,10 @@ class Play extends Phaser.Scene {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
+        if (this.checkCollision(this.p1Rocket, this.ufo1)){
+            this.p1Rocket.reset();
+            this.shipExplode(this.ufo1);
+        }
         if (this.checkCollision(this.ball, this.ship03)){
             this.ball.reset();
             this.shipExplode(this.ship03);
@@ -130,6 +138,10 @@ class Play extends Phaser.Scene {
         if (this.checkCollision(this.ball, this.ship01)){
             this.ball.reset();
             this.shipExplode(this.ship01);
+        }
+        if (this.checkCollision(this.ball, this.ufo1)){
+            this.ball.reset();
+            this.shipExplode(this.ufo1);
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
