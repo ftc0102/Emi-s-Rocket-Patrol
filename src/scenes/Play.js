@@ -49,28 +49,33 @@ class Play extends Phaser.Scene {
            frames: this.anims.generateFrameNumbers("explosion", {start: 0, end:9, first:0}),
            frameRate: 30
        })
-       //define scores
+       //define score
        this.p1Score = 0;
-       this.highScore = 0;
        //display score
        let scoreConfig = {
            fontFamily:"Courier",
            fontSize: "28px",
            backgroundColor: "#F3B141",
            color: "#843605",
-           align: "right",
+           align: "center",
            padding:{
                top:5,
                bottom:5,
            },
-           fixedWidth: 100
+           fixedWidth: 200
        }
-       this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+       this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, "Score: 0", scoreConfig);
+       //high score display
+       this.scoreRecord = this.add.text(game.config.width - borderUISize*8 - borderPadding, borderUISize + borderPadding*2, `High: ${highScore}`, scoreConfig);
        //game over flag
        this.gameOver = false;
        //timer (60 seconds)
        scoreConfig.fixedWidth = 0;
        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+           if (this.p1Score > highScore){
+               highScore = this.p1Score; //update high score 
+               this.scoreRecord = `Score: ${highScore}`;
+           }
            this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
            this.add.text(game.config.width/2, game.config.height/2 + 64, "Press (R) to Restart or <- for Menu", scoreConfig).setOrigin(0.5);
            this.gameOver = true;
@@ -176,7 +181,7 @@ class Play extends Phaser.Scene {
         });
         //score add and repaint
         this.p1Score += ship.points;
-        this.scoreLeft.text =  this.p1Score;
+        this.scoreLeft.text =  `Score: ${this.p1Score}`;
 
         //sfx randomization
         let rng = Phaser.Math.Between(1,5);
