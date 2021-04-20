@@ -7,6 +7,7 @@ class Ball extends Phaser.GameObjects.Sprite {
         this.moveSpeed = 2; //pixels per frame
         this.isFiring = false;
         this.ricochet = false;
+        this.alpha = 0;
     }
 
     update(){
@@ -38,6 +39,7 @@ class Ball extends Phaser.GameObjects.Sprite {
     }
 
     reset(){
+        this.alpha=0;
         this.isFiring = false;
         this.y = game.config.height - borderUISize - borderPadding - 12;
         this.ricochet = false;
