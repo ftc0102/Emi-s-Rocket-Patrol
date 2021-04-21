@@ -40,9 +40,12 @@
             //KEYS
             keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
             keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+            keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         }
 
         update() {
+          console.log(activePlayer);
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
               // easy mode
               game.settings = {
@@ -60,6 +63,25 @@
               }
               this.sound.play('sfx_select');
               this.scene.start('playScene');    
+            }
+            if (Phaser.Input.Keyboard.JustDown(keyUP)) {
+              // easy mode 2P
+              game.settings = {
+                spaceshipSpeed: 3,
+                gameTimer: 60000    
+              }
+              this.sound.play('sfx_select');
+              this.scene.start('playerScene');    
+            }
+
+            if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {
+              // hard mode 2P
+              game.settings = {
+                spaceshipSpeed: 4,
+                gameTimer: 10000    
+              }
+              this.sound.play('sfx_select');
+              this.scene.start('playerScene');    
             }
           }
     }

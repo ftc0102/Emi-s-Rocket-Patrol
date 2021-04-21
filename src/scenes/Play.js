@@ -15,6 +15,8 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //time
+        let visibleTime = this.game.settings.gameTimer/100;
        //scrolling stars
        this.starfield = this.add.tileSprite(0,0,640, 480, "starfield").setOrigin(0,0);
         //Green
@@ -65,6 +67,8 @@ class Play extends Phaser.Scene {
            fixedWidth: 200
        }
        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, "Score: 0", scoreConfig);
+       //timer display
+       this.timeLeft = this.add.text(game.config.width - borderUISize*16 - borderPadding, borderUISize + borderPadding*2, `Time: ${visibleTime}`);
        //high score display
        this.scoreRecord = this.add.text(game.config.width - borderUISize*8 - borderPadding, borderUISize + borderPadding*2, `High: ${highScore}`, scoreConfig);
        //game over flag
@@ -76,14 +80,23 @@ class Play extends Phaser.Scene {
                highScore = this.p1Score; //update high score 
                this.scoreRecord = `Score: ${highScore}`;
            }
-           this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
-           this.add.text(game.config.width/2, game.config.height/2 + 64, "Press (R) to Restart or <- for Menu", scoreConfig).setOrigin(0.5);
-           this.gameOver = true;
+           if (activePlayer == 1){
+               activePlayer = 2;
+               this.scene.start("playerScene");
+           }
+           if (activePlayer==2){
+            this.gameOver = true;
+            this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, "Press (R) to Restart or <- for Menu", scoreConfig).setOrigin(0.5);
+           }
        }, null, this);
 
     }
 
     update(){
+        //update time
+        this.game.settings.gameTimer/100;
+        this.timeLeft.text =  `Time: ${this.visibleScore}`;
         //check for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
@@ -182,7 +195,6 @@ class Play extends Phaser.Scene {
         //score add and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text =  `Score: ${this.p1Score}`;
-
         //sfx randomization
         let rng = Phaser.Math.Between(1,5);
         switch(rng){
