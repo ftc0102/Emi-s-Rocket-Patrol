@@ -45,13 +45,13 @@
         }
 
         update() {
-          console.log(activePlayer);
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
               // easy mode
               game.settings = {
                 spaceshipSpeed: 3,
                 gameTimer: 60000    
               }
+              activePlayer=2;
               this.sound.play('sfx_select');
               this.scene.start('playScene');    
             }
@@ -61,6 +61,7 @@
                 spaceshipSpeed: 4,
                 gameTimer: 10000    
               }
+              activePlayer=2;
               this.sound.play('sfx_select');
               this.scene.start('playScene');    
             }

@@ -12,11 +12,24 @@ class Play extends Phaser.Scene {
 
         //load spritesheet
         this.load.spritesheet("explosion", "./assets/explosion.png", {frameWidth: 64, frameHeight: 32, startFrame:0, endFrame:9});
+        this.load.spritesheet("spaceshipAnimation", "./assets/spaceship-Sheet-Sheet.png", {frameWidth: 63, frameHeight: 32, startFrame:0, endFrame:1});
     }
 
-    create() {
-        //time
-        let visibleTime = this.game.settings.gameTimer/100;
+    create() { 
+        //animation config 
+        this.anims.create({ //explosion
+            key: "explode",
+            frames: this.anims.generateFrameNumbers("explosion", {start: 0, end:9, first:0}),
+            frameRate: 30
+        });
+
+        this.anims.create({ //spaceship
+            key: "greenSpaceship",
+            frames: this.anims.generateFrameNumbers("spaceshipAnimation", { start: 0, end: 1, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
+
        //scrolling stars
        this.starfield = this.add.tileSprite(0,0,640, 480, "starfield").setOrigin(0,0);
         //Green
@@ -31,10 +44,14 @@ class Play extends Phaser.Scene {
        //rocket
        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height-borderUISize-borderPadding, "rocket").setOrigin(0.5,0);
        //add 3 spaceships 
-       this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, "spaceship", 0, 30).setOrigin(0,0);
-       this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0,0);
-       this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, "spaceship", 0, 10).setOrigin(0,0);
+       this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, "spaceshipAnimation", 0, 30).setOrigin(0,0);
+       this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, "spaceshipAnimation", 0, 20).setOrigin(0,0);
+       this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, "spaceshipAnimation", 0, 10).setOrigin(0,0);
        this.ufo1.moveSpeed = 7;
+       //give spaceships animation
+       this.ship01.anims.play("greenSpaceship");
+       this.ship02.anims.play("greenSpaceship");
+       this.ship03.anims.play("greenSpaceship");
        //add energy ball
        this.ball = new Ball(this, game.config.width/2, game.config.height-borderUISize-borderPadding-12, "ball").setOrigin(0.5,0);
        //controls
@@ -45,12 +62,6 @@ class Play extends Phaser.Scene {
        keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
        keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
 
-       //animation configuration
-       this.anims.create({
-           key: "explode",
-           frames: this.anims.generateFrameNumbers("explosion", {start: 0, end:9, first:0}),
-           frameRate: 30
-       })
        //define score
        this.p1Score = 0;
        //display score
@@ -66,9 +77,8 @@ class Play extends Phaser.Scene {
            },
            fixedWidth: 200
        }
+       //score
        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, "Score: 0", scoreConfig);
-       //timer display
-       this.timeLeft = this.add.text(game.config.width - borderUISize*16 - borderPadding, borderUISize + borderPadding*2, `Time: ${visibleTime}`);
        //high score display
        this.scoreRecord = this.add.text(game.config.width - borderUISize*8 - borderPadding, borderUISize + borderPadding*2, `High: ${highScore}`, scoreConfig);
        //game over flag
@@ -94,9 +104,7 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-        //update time
-        this.game.settings.gameTimer/100;
-        this.timeLeft.text =  `Time: ${this.visibleScore}`;
+        //play rocket animation
         //check for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
