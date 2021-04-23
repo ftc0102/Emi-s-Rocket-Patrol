@@ -4,14 +4,6 @@ class Play extends Phaser.Scene {
     }
 //assets
     preload(){
-        this.load.audio("sfx_select", "./assets/select.wav");
-        this.load.audio("sfx_explosion", "./assets/explosion.wav");
-        this.load.audio("sfx_explosion2", "./assets/explosionAlt1.wav");
-        this.load.audio("sfx_explosion3", "./assets/explosionAlt2.wav");
-        this.load.audio("sfx_explosion4", "./assets/explosionAlt3.wav");
-        this.load.audio("sfx_explosion5", "./assets/explosionAlt4.wav");
-        this.load.audio("sfx_rocket", "./assets/rocket.wav");
-        
         this.load.image("rocket", "./assets/rocket.png");
         this.load.image("spaceship", "./assets/spaceship.png");
         this.load.image("starfield", "./assets/starfield.png");
