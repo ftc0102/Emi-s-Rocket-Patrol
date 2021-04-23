@@ -6,7 +6,7 @@ class Ball extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
         this.moveSpeed = 2; //pixels per frame
         this.isFiring = false;
-        this.ricochet = false;
+        this.ricochet = false; //false = ball moves left, true = ball moves right
         this.alpha = 0;
     }
 
@@ -30,10 +30,10 @@ class Ball extends Phaser.GameObjects.Sprite {
                 this.x += this.moveSpeed;
             }
 
-            this.y -= this.moveSpeed;
+            this.y -= this.moveSpeed; //always go up
         }
 
-        if(this.y <= borderUISize * 4 + borderPadding){
+        if(this.y <= borderUISize * 4 + borderPadding){ //don't go too high
             this.reset();
         }
     }

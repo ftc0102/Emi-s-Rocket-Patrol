@@ -87,14 +87,17 @@ class Play extends Phaser.Scene {
        //timer (60 seconds)
        scoreConfig.fixedWidth = 0;
        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-           if (this.p1Score > highScore){
+           //score update
+            if (this.p1Score > highScore){
                highScore = this.p1Score; //update high score 
-               this.scoreRecord = `Score: ${highScore}`;
+               this.scoreRecord = `Score: ${highScore}`; //displays high score
            }
+           //switch to second player if 2P
            if (activePlayer == 1){
-               activePlayer = 2;
+               activePlayer = 2; 
                this.scene.start("playerScene");
            }
+           //transition to end of game
            if (activePlayer==2){
             this.gameOver = true;
             this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
@@ -203,10 +206,10 @@ class Play extends Phaser.Scene {
         });
         //score add and repaint
         this.p1Score += ship.points;
-        this.scoreLeft.text =  `Score: ${this.p1Score}`;
+        this.scoreLeft.text =  `Score: ${this.p1Score}`; //makes score visible
         //sfx randomization
         let rng = Phaser.Math.Between(1,5);
-        switch(rng){
+        switch(rng){ 
             case 1:
                 this.sound.play("sfx_explosion");
                 break;

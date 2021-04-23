@@ -51,7 +51,7 @@
                 spaceshipSpeed: 3,
                 gameTimer: 60000    
               }
-              activePlayer=2;
+              activePlayer=2; //by setting activePlayer to 2, we can make 2P the default and 1P just skips to the second player
               this.sound.play('sfx_select');
               this.scene.start('playScene');    
             }
@@ -61,7 +61,7 @@
                 spaceshipSpeed: 4,
                 gameTimer: 10000    
               }
-              activePlayer=2;
+              activePlayer=2; 
               this.sound.play('sfx_select');
               this.scene.start('playScene');    
             }
