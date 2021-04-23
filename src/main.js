@@ -2,7 +2,7 @@
 Emi's Rocket Patrol (yeah I'm not great at names)
 Code by: Emily Barnes
 23 April 2021
-Time spent overall: About 8 hours
+Time spent overall: About 8 hours.
 
 
 POINTS BREAKDOWN
