@@ -7,10 +7,10 @@
             //load audio
             this.load.audio("sfx_select", "./assets/select.wav");
             this.load.audio("sfx_explosion", "./assets/explosion.wav");
-            this.load.audio("sfx_explosion2", "./assets/explosionAlt1.wav");
-            this.load.audio("sfx_explosion3", "./assets/explosionAlt2.wav");
-            this.load.audio("sfx_explosion4", "./assets/explosionAlt3.wav");
-            this.load.audio("sfx_explosion5", "./assets/explosionAlt4.wav");
+            this.load.audio("sfx_explosion2", "https://static.wikia.nocookie.net/bankforcmpm120/images/b/b4/ExplosionAlt1.wav");
+            this.load.audio("sfx_explosion3", "https://static.wikia.nocookie.net/bankforcmpm120/images/5/5f/ExplosionAlt2.wav");
+            this.load.audio("sfx_explosion4", "https://static.wikia.nocookie.net/bankforcmpm120/images/1/12/ExplosionAlt3.wav");
+            this.load.audio("sfx_explosion5", "https://static.wikia.nocookie.net/bankforcmpm120/images/9/96/ExplosionAlt4.wav");
             this.load.audio("sfx_rocket", "./assets/rocket.wav");
         }
 
